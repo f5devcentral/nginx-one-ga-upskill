@@ -8,6 +8,15 @@ order: 7
 In this lab, you will be taking a look at a config sync group consisting of a mix of NGINX Plus and NGINX OSS instances.
 Follow the steps below to set up the lab environment:
 
+1. Enter the Data Plane Key in the *Set Variable* component below and click the **Save** button; this will allow the
+lab guide to use the key in further steps.
+
+:point_down: ***Note:** This is not a screenshot - it is an interactive component of the lab guide*.<br />
+
+    <InputVariable
+        name="NGINX_AGENT_SERVER_TOKEN"
+    />
+
 1. Based on what you have learned earlier, create a new Config Sync Group using your unique lab deployment name,
 **<GetVariable name="petname" />-fixit**.
 
