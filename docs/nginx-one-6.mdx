@@ -416,10 +416,9 @@ skipping though each config detail.
 1. Check that the *stub_status* module is working by clicking the *Check* button below.
 
     <APICheck
-        url="https://10.1.1.6"
+        url="http://10.1.1.6"
         path="/nginx_status"
         targetStatusCode={200}
-        tlsComponent={true}
     />
 
 1. You can also check using the HTTP page by going to the **NGINX OSS** UDF System -> selecting **ACCESS** ->
@@ -485,9 +484,11 @@ You will see the Select the *default.conf* file from the file picker. Note the b
 1. Check your work:<br />&nbsp;<br />To check that the <GetVariable name="nginx-plus-1" /> instance is now listening on 443 click the *Check* button below.
 
     <APICheck
-        url="http://10.1.1.6:443"
+        url="https://10.1.1.6"
         path="/nginx_status"
         targetStatusCode={200}
+        tlsComponent={true}
+
     />
 
 1. You can also check HTTPS from UDF. Find your **NGINX OSS** System -> Select **ACCESS** -> Select **NGINX HTTPS**.
