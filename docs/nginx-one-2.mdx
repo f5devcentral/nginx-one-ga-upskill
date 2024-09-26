@@ -551,7 +551,7 @@ But for this lab, we have automated this process for you:
 
             location /test_header {
                 add_header X-Test-App true;
-                return 200 'HTTP/1.1 200 OK\nContent-Type: text/html\n\n<html><body>Howdy!</body></html>';
+                return 200 'HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<html><body>Howdy!</body></html>';
             }
         }
         ```
@@ -651,7 +651,7 @@ Now that we have two instances in the **<GetVariable name="petname" />** Config 
 
             location /test_header {
                 add_header X-Test-App true;
-                return 200 'HTTP/1.1 200 OK\nContent-Type: text/html\n\n<html><body>Howdy!</body></html>';
+                return 200 'HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<html><body>Howdy!</body></html>';
             }
 
             location /test_publish {
@@ -776,7 +776,7 @@ the Config Sync Group.
 
         location /test_custom {
             add_header X-Test-Custom-App true;
-            return 200 'HTTP/1.1 200 OK\nContent-Type: text/html\n\n<html><body>Howdy!</body></html>';
+            return 200 'HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<html><body>Howdy!</body></html>';
         }
 
         error_page   500 502 503 504  /50x.html;
