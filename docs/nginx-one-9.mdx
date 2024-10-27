@@ -1,452 +1,200 @@
 ---
-title: (Technical) Use Case 2 Interactive Lab
-description: Using Config Sync Groups Interactive Lab
-order: 9
+title: NGINX One Console Lab - Part 1
+description: Getting console access, starting the lab
+order: 1
 ---
 
-## Use Case 2: Config Sync Group Interactive lab
+## What is NGINX One?
 
-Now let's continue to the interactive lab where you will learn how to manage NGINX instances to NGINX One Console's
-Config Sync Group.
+NGINX One is an all-in-one platform that integrates the best of NGINX’s offerings into a unified package that includes a cloud-based dashboard and access to [F5 Distributed Cloud](https://www.f5.com/cloud). Customers get advanced load balancing, web and application server capabilities, API gateway functionalities, and security features. The goal of NGINX One is to provide unparalleled performance, security, and scalability for modern applications, whether they are deployed in the cloud, on-premises, or in hybrid environments.
 
-### Creating a Config Sync Group
+## NGINX One Console
 
-1. Go to the NGINX One Console.
+NGINX One Console gives all NGINX users access to a SaaS experience for managing NGINX instances as part of the F5 Distributed Cloud. It gives NGINX users unrivaled visibility, delivery and optimization capabilities combined with the speed and flexibility of the F5 Distributed Cloud Platform.
 
-1. From the left menu in the *Manage* section, click on *Config Sync Groups*.
+The NGINX One Console is valuable because it simplifies the complexities of modern application delivery by integrating multiple functionalities into a single platform. This reduces the need for disparate tools, lowers operational overhead and costs, and ensures robust security for your applications. Additionally, its comprehensive feature set—including advanced load balancing, enhanced security, and performance optimization—provides customers with a reliable, scalable, and secure solution for managing their applications.
 
-1. Click on *Add Config Sync Group*.
+You will be able to accelerate application delivery and time-to-value like never before with flexible pricing and SaaS capabilities.
 
-    ![Add Config Sync Group](media/lab5-1.png)
+With NGINX One Console, you will get improved:
 
-1. On the right, enter your unique lab deployment name, **<GetVariable name="petname" />**, then select *Create* on the bottom.
+- Performance at scale
+- Visibility and insight
+- Security and control
 
-    ![Create New Config Sync Group](media/lab5-2.png)
+## Lab Introduction
 
-1. Your unique Config Sync Group named **<GetVariable name="petname" />** should be in the list.
+This lab will give you an overview of how the NGINX One console provides visibility into a global fleet of NGINX instances, both NGINX Plus and NGINX Open Source (OSS).
 
-    ![New Config Sync Group](media/lab5-3.png)
+After this lab, you will be able to:
 
-1. You can now explore your Config Sync Group by selecting **<GetVariable name="petname" />**, where two tabs named
-*Details* and *Configuration* are present. On the *Details* tab, there are two sections: *Details* represents additional
-details of this group and *Instances* represents the NGINX instances that are in this group.
+- Access and navigate the NGINX One console
+- Manage NGINX configuration
+- Review recommendations from the NGINX One console
+- Setup Config Sync Groups
+- Install the NGINX Agent on both NGINX Plus and NGINX OSS instances (optional)
 
-    ![Details View](media/lab5-4.png)
+## Prerequisites
 
-    On the *Configuration* tab, there is a view that defines the NGINX configurations to use for all NGINX instances
-    in this Config Sync Group.
+The "NGINX One Enablement Lab" UDF blueprint contains all the prerequisites for this lab. This includes:
 
-    ![Configuration View](media/lab5-5.png)
+- This interactive lab guide
+- NGINX Plus and NGINX OSS instances
+- F5 XC [lab tenant](https://f5-xc-lab-app.console.ves.volterra.io) access
 
-#### Adding new NGINX instances to config sync group
+> Tip: Clicking on any image in this lab guide lab will enlarge it. To dismiss the enlarged image, click the white "X" in its window, or press the Escape key.
 
-We will now proceed with populating our Config Sync Group with two NGINX Plus instances: an NGINX Plus Virtual Machine
-provided by the UDF Blueprint and an NGINX Plus Container which we will create on our own. We learned from the Demo lab
-of two ways of configuring the Config Sync Group's initial NGINX configuration.
+## F5 Distributed Cloud Tenant Access
 
-1. Auto-populate the NGINX configuration using the first NGINX instance added to a Config Sync Group
-1. Manually provide the NGINX configuration
+Once you join the UDF session, your UDF deployment will start and create an ephemeral account on the F5 Distributed Cloud console (this may take 5-10min).
 
-This lab will proceed using the auto-populate option.
+1. Once your ephemeral account is created, you will receive an email to set or update your password. Click the **Update Password** link in the email. Check the spam folder for the account used to register with UDF if you can't find the email.
 
-There are two methods of adding instances to our Config Sync Group.
-1. If the instance is NOT already registered with NGINX One Console, we install the NGINX agent so it registers and add the
-instance to the config sync group.
-1. If the instance is already managed by NGINX One Console, we manually update NGINX agent's config that defines the
-Config Sync Group name then restart the NGINX agent service.
+    ![XC Console Email](media/lab0-01.png)
 
-Documentation for both these methods can also be found by selecting **Add Instance to Config Sync Group** from your
-Config Sync Group.
+1. Update your password. Click **Submit**.
 
-As we are using a fresh environment for this lab, **we will only use the first method** which will automatically
-register and add our NGINX Plus instances to the Config Sync Group.
+    ![image](media/lab0-02.png)
 
-1. From your UDF Deployment, open a Web Shell to your **NGINX Plus** component and run the command below to set a
-unique hostname for the NGINX One Console.
+1. Click **Log In**.
 
-    ```bash
-    sudo hostnamectl set-hostname {{petname}}-ubuntu-plus
-    ```
+    ![image](media/lab0-03.png)
 
-1. Now navigate back to the NGINX One Console. Select *Config Sync Group* under the *Manage* section on the left, then
-select your Config Sync Groups, **<GetVariable name="petname" />**.
+1. Once redirected to the F5 Distributed Cloud console login, enter the lab tenant name (*f5-xc-lab-app*), and click **Next**. Enter your email and password and click **Sign in**.
 
-1. In the *Instances* section, select *Add Instance to Config Sync Group*.
+    ![image](media/lab0-11.png)
+    ![image](media/lab0-10.png)
 
-1. In the new window, select *Register a new instance with NGINX One then add to config sync group* then select *Next*.
+1. Check the radio box and click **Accept and Agree** after reviewing terms.
 
-1. Select *Use existing Key*, provide the Data Plane Key you created at the beginning of this session, then select
-the "copy" icon to copy the content in the console.
+    ![image](media/lab0-05.png)
 
-    ![Add command](media/upskill/use-case-2/1.png)
+1. F5 XC console "persona" and the "skill level" settings dictate how services and configuration options are presented to the user. These settings are currently not applicable to the NGINX One console. Make any valid selection for each dialog. Click **Next** or **Get Started** depending on the dialog.
 
-1. Go back to the Web Shell of your **NGINX Plus** system. Paste and run the copied command.
+    ![image](media/lab0-06.png)
 
-    ![agent install with config sync group](media/upskill/use-case-2/2.png)
+    ![image](media/lab0-07.png)
 
-    Once the installation has completed, the NGINX Instance will appear as an instance managed by your config sync
-    group. If it doesn't immediately appear in the list, try clicking the refresh button.
+1. Several **Guidance ToolTips** might appear. These are used to inform users of new features when the F5 XC console is updated. Close the dialogues and continue.
 
-Let's proceed to add a second NGINX instance. This time, we will add an NGINX container instance.
+## Accessing NGINX One Console
 
-1. Open a Web Shell to the **Lab Framework** UDF instance and start an NGINX Plus container with the commands below.
+Once logged into the F5 XC console, the "home" screen shows you various tiles which represent console features. For example, you might configure Multicloud networking from the "Multi-Cloud Network Connect" tile, build global server load balancing rules from the "DNS Management" tile, or view synthetic monitoring data from the "Observability" tile. In this lab, we'll focus on the NGINX One console.
 
-1. We've provided the below `docker run` command that has been copied from the NGINX One Console UI because we are
-adding a couple `docker` options to help distinguish your NGINX instance here with others from this session. In
-addition to the originally provided command, we added two options that defines the container's `hostname` and `name`.
+    > :point_right: **Note:** Your permissions in the F5 XC console are specific to this lab. You don't have permissions to all the tiles on the "home" screen.
 
-    Also, be sure to:
-    - Replace `YOUR_DATA_PLANE_KEY` with your Data Plane Key.
+1. Click the **NGINX One** tile from the home screen.
 
-    ```shell
-    sudo docker run \
-    --hostname={{petname}}-nginx-plus-sync \
-    --name={{petname}}-nginx-plus-sync \
-    --env=NGINX_AGENT_SERVER_GRPCPORT=443 \
-    --env=NGINX_AGENT_SERVER_HOST=agent.connect.nginx.com \
-    --env=NGINX_AGENT_TLS_ENABLE=true \
-    --env=NGINX_AGENT_INSTANCE_GROUP={{petname}} \
-    --restart=always \
-    --runtime=runc \
-    --env=NGINX_AGENT_SERVER_TOKEN=YOUR_DATA_PLANE_KEY \
-    -d private-registry.nginx.com/nginx-plus/agent:debian
-    ```
-    > **NOTE:** If you encounter a error saying **docker** is not installed, confirm you are on the **Lab Framework** Web
-    Shell.
+    ![NGINX One in the XC Console](media/lab1-1.png)
 
-    > **NOTE:** Additional details regarding how I got the `docker run` command above is detailed by clicking on the
-    **Show** button below.
+1. The NGINX One "welcome" screen will appear. Click **Visit Service** to proceed to the NGINX One console.
 
-    Confirm that the NGINX Container is running using the following command:
-    ```bash
-    docker ps | grep {{petname}}-nginx-plus-sync
-    ```
+    ![The NGINX One Welcome Screen](media/lab1-2.png)
 
-    ![](media/lab6-1.png)
+1. The NGINX One Dashboard shows an overview of your environment, including availability, platform and version distribution, and CVEs/configuration recommendations. Your dashboard will vary depending on what is installed in your tenant. Feel free to click around and explore.
 
-<Collapsible title="NGINX One Console instructions for adding NGINX container instances">
+    ![NGINX One Dashboard](media/lab1-3.png)
 
-> :warning: **NO ACTION NEEDED.** You do not need to run additional commands shown here. This box is meant to show how
-you would find the command to add an NGINX container instance.
+1. In the left-hand menu in the *Manage* section is the *Instances* link. You may or may not have any existing instances in your tenant. Don’t worry if there aren’t any, you will be deploying two instances later in the lab. If there are any existing instances, click an instance’s hostname to view its details.
 
-1. Navigate back to the NGINX One Console. Select *Config Sync Group* under the *Manage* section on the left, then
-select your Config Sync Groups, **<GetVariable name="petname" />**.
+    ![NGINX One instance details](media/lab1-4.png)
 
-1. In the *Instances* section, select *Add Instance to Config Sync Group*.
+## Connecting to the Console
 
-1. In the new window, select *Register a new instance with NGINX One then add to config sync group* then select *Next*.
+NGINX One uses an agent installed alongside NGINX to communicate with the NGINX One service.
 
-1. Select *Use existing Key*, then provide the Data Plane Key you created at the beginning of this session.
+![There are two instances in the customer environment: one Plus and one OSS. An additional NGINX Agent is installed alongside NGINX in each instance, and the Agent communicates between the NGINX instance and the NGINX One service.](media/lab2-1.png)
 
-1. Select the *Docker Container* tab.
+The agent uses a Data Plane Key to authenticate and identify itself to NGINX One. In this lab we will create a new Data Plane Key, and use it to install the NGINX Agent on the NGINX Plus instance.
 
-    ![Add New NGINX Plus Container](media/lab5-17.png)
+### Generating a Data Plane Key
 
-    > **Note:** This system already cached the container image, so Steps 1 and 2 from above can be skipped in this
-    session.
+As you continue through this lab, you will be using a randomly-generated name that you will use to create items in the NGINX One console.<br/>Your assigned name is: **<GetVariable name="petname" />**<br />
+You will notice it appear throughout the lab guide content. The use of this name is *crucial* when creating objects in the NGINX One Console in order to differentiate your items from those of other students also working in this shared environment.
 
-1. The command you see from **Step 3** from NGINX One Console is the `docker run` command you just ran. And if you
-notice, I added two options to set the `hostname` and `name` to the original one you see here.
+1. From the NGINX One console, in the left hand menu under the "Manage" section, select **Data Plane Keys**.
 
-</Collapsible>
+1. Click **Add Data Plane Key**.
 
-Once the installation has completed, the NGINX Plus container will appear as an instance managed by your config sync group. If it doesn't immediately appear in the list, try clicking the refresh button.
+1. Give the key a name based on your lab's ephemeral name, such as **<GetVariable name="petname" />-nginx-key**
 
-Your config sync group should now be populated by two NGINX Plus instances: one VM and one running Docker container.
+    > :point_right: **Note:** You are working in a shared environment; keep track of your resources, and be careful not to accidentally modify anyone else's.
 
-![](media/lab6-2.png)
+1. By default, the key expiration date will be set to 1 year.  Depending on your use case, you may want to set a shorter expiration date.  For this lab, we will use the default value.
 
----
-#### (Additional Info) Updating existing managed instance to the config sync group
+1. Click **Generate**.
 
-Though not applicable for the purposes of this lab, this method assumes that a target NGINX instance is already
-registered in the NGINX One Console, and therefore has a running NGINX agent associated with the console. In order to
-update the config sync group of a managed instance, we need to manually update the agent's configuration with our config
-sync group's information. Updates can include the following for the config sync group
-
-- Adding NGINX instances to config sync group
-- Updating NGINX instance's config sync group
-- Deleting NGINX instance from config sync group
-
-1. On the target NGINX instance, navigate to the agent's config file in the **/var/lib/nginx-agent/** directory,
-then open the **agent-dynamic.conf** file in a text editor.
-
-1. The following code is added to the bottom of the **agent-dynamic.conf** file.
-
-    ```nginx
-    instance_group: [YOUR CONFIG SYNC GROUP NAME GOES HERE]
-    ```
-
-    The agent-dynamic.conf file should look similar to the example below:
-    ```nginx
-    # agent-dynamic.conf
-    #
-    # Dynamic configuration file for NGINX Agent.
-    #
-    # The purpose of this file is to track NGINX Agent configuration
-    # values that can be dynamically changed via the API and the NGINX Agent install script.
-    # You may edit this file, but API calls that modify the tags on this system will
-    # overwrite the tag values in this file.
-    #
-    # The NGINX Agent configuration values that API calls can modify are as follows:
-    #    - tags
-    #
-    # The NGINX Agent configuration value(s) that the NGINX Agent install script can modify are as follows:
-    #    - instance_group
-    instance_group: [YOUR CONFIG SYNC GROUP NAME GOES HERE]
-    ```
-
-1. The NGINX Agent is restarted using the following command:
-
-    ```bash
-    sudo systemctl restart nginx-agent
-    ```
-
-This NGINX Instance will then appear as an instance managed by a config sync group after a few minutes.
-
-> :warning: **Warning:** It is not advisable to use this method for registered NGINX Plus containers, nor is it
-possible, due to their inherently ephemeral nature. If you wish to add a containerized NGINX Plus instance to your
-config sync group, it is highly recommended to create a new NGINX Plus container within the config sync group using the
-method described earlier.
-
----
-
-#### Viewing Logs
-
-Let's take a look under the hood at how a config sync group pushes configuration updates to all of its constituent
-NGINX instances simultaneously. To do so, we'll examine the logs of the NGINX Agent (and others) in real-time for
-several instances simultaneously.
-
-1. Open a Web Shell for your **NGINX Plus** instance and use the following command to view its NGINX Agent log in real time.
-    ```bash
-    sudo tail -f /var/log/nginx-agent/agent.log
-    ```
-
-1. Open Web Shell for the **Lab Framework** VM and locate the running NGINX Plus Docker container using the following command:
-
-    ```bash
-    docker exec -it {{petname}}-nginx-plus-sync bash
-    ```
-    This will open up a bash shell session within the container. Once inside, use the following command to access the NGINX Agent log within the container.
-    ```bash
-    tail -f /var/log/nginx-agent/agent.log
-    ```
-1. Place both Web Shell windows side-by-side so you can observe them both simultaneously.
-    ![](media/lab6-3.png)
-1. Navigate to your sync group's configuration tab. Here, you can make any valid edits to the Config Sync Group
-configuration that you wish. In this case, we will add the following simple comment at the top of the
-**/etc/nginx/conf.d/demo.conf** file:
-
-    ```nginx
-    ## This is a config change made through the Config Sync Group.
-    ```
-
-    The updated configuration should look similar to the example below. Note the location of the comment we made at
-    the top:
-
-    ```nginx
-    ## This is a config change made through the Config Sync Group.
-    server {
-        listen 80 default_server;
-        server_name app_server;
-
-        root /usr/share/nginx/html;
-        error_log /var/log/nginx/app-server-error.log notice;
-        index demo-index.html index.html;
-        expires -1;
-
-        sub_filter_once off;
-        sub_filter 'server_hostname' '$hostname';
-        sub_filter 'server_address'  '$server_addr:$server_port';
-        sub_filter 'server_url'      '$request_uri';
-        sub_filter 'remote_addr'     '$remote_addr:$remote_port';
-        sub_filter 'server_date'     '$time_local';
-        sub_filter 'client_browser'  '$http_user_agent';
-        sub_filter 'request_id'      '$request_id';
-        sub_filter 'nginx_version'   '$nginx_version';
-        sub_filter 'document_root'   '$document_root';
-        sub_filter 'proxied_for_ip'  '$http_x_forwarded_for';
-    }
-    ```
-
-1. Make sure the edits you made are valid, then save and publish these changes.
-
-1. Now observe the agent.log feed on both instances as the configuration update is applied. For both instances you will see a series of log messages appear, indicating that the configuration change is being sent and applied to each instance.
-    ![](media/lab6-4.png)
-    You will notice several matching log records for both instances as the update is being applied. Note the highlighted lines in the log and observe the timestamps for both, they are identical. When a configuration update is made to a Config Sync Group, it is applied to every instance in the group simultaneously via the NGINX Agent.
----
-#### Modifying a managed instance
-
-What happens if we try to make configuration changes to a particular NGINX instance inside a Config Sync Group?
-
-1. Open a Web Shell for your **NGINX Plus** instance, then navigate to the **/etc/nginx/conf.d/** directory, then open
-the **demo.conf** file in a text editor of your choice.
-
-1. Let's add the following **server block** to the **/etc/nginx/conf.d/demo.conf** file:
-    ```nginx
-        location /test_publish {
-            default_type text/html;
-            return 200 '<html><body><h1>Config change made outside an NGINX One Config Sync Group</h1></body></html>';
-        }
-    ```
-
-    Our **demo.conf** file should look similar to the example below. Note the location of the server block we added at
-    the bottom:
-
-    ```nginx
-    ## This is a change made to an instance managed by a Config Sync Group.
-    server {
-        listen 80 default_server;
-        server_name app_server;
-
-        root /usr/share/nginx/html;
-        error_log /var/log/nginx/app-server-error.log notice;
-        index demo-index.html index.html;
-        expires -1;
-
-        sub_filter_once off;
-        sub_filter 'server_hostname' '$hostname';
-        sub_filter 'server_address'  '$server_addr:$server_port';
-        sub_filter 'server_url'      '$request_uri';
-        sub_filter 'remote_addr'     '$remote_addr:$remote_port';
-        sub_filter 'server_date'     '$time_local';
-        sub_filter 'client_browser'  '$http_user_agent';
-        sub_filter 'request_id'      '$request_id';
-        sub_filter 'nginx_version'   '$nginx_version';
-        sub_filter 'document_root'   '$document_root';
-        sub_filter 'proxied_for_ip'  '$http_x_forwarded_for';
+    ![Generating a Data Plane Key](media/lab2-4.png)
 
-        location /test_publish {
-            default_type text/html;
-            return 200 '<html><body><h1>Config change made outside an NGINX One Config Sync Group</h1></body></html>';
-        }
-    }
-    ```
-    Now save and exit the file.
+1. The Data Plane Key will be displayed. Click the *Copy* icon to copy the key to the clipboard.
 
-1. Go back to the **details** tab of your config sync group and take note of the **Config Sync Status**. You should see
-a yellow indicator with the text "**Sync In Progress**". After a few seconds, this indicator should turn green with the
-text **"In Sync"**.
+    > :warning: **Warning:** *SAVE THIS KEY SOMEWHERE SAFE.* There is no way to retrieve the key after you click **close**. This key will be used in multiple labs.
 
-1. Now return to the Web Shell window for your NGINX Plus instance and re-open the **demo.conf** file. The location block we
-added earlier should have been removed entirely.
-    ![](media/lab6-5.png)
+    ![Data Plane Key](media/lab2-5.png)
 
-1. Now view the **/var/log/nginx-agent/agent.log**. You will notice log records indicating that the NGINX Agent had
-retrieved and applied the Config Sync Group configuration once again.
-    ![](media/lab6-6.png)
+1. Now enter the Data Plane Key in the *Set Variable* component below and click the **Save** button; this will allow the lab guide to use the key in further steps.
 
-Feel free to repeat this process and make as many edits as you want to the demo.conf file. As soon as you save your
-changes, NGINX One will automatically override them and re-apply the Config Sync Group's configuration to the instance.
+:point_down: ***Note:** This is not a screenshot - it is an interactive component of the lab guide*.<br />
 
-> :point_right: If a permanent configuration change needs to be made to a specific instance within a config sync group,
-the instance should be removed from a config sync group so that it can be managed individually.
+    <InputVariable 
+        name="NGINX_AGENT_SERVER_TOKEN"
+    />
 
-#### Removing NGINX Instances from Config Sync Group
+### Deploy NGINX Container
 
-It is possible to remove NGINX instances from the Config Sync Group shown in the screenshot below. But doing this also
-removes the NGINX instance from being managed by NGINX One Console.
+Now that we have a data plane key, we can attach our first NGINX instance to the NGINX One Console.
 
-![](media/upskill/use-case-2/5.png)
+    > **Note:** This lab will focus more on the NGINX One Console and less on how to install NGINX Agent on your NGINX instance and connect the instance to NGINX One.  If this is something you would like to explore in greater depth, check out the optional labs at the end of this lab guide.
 
-Let's go through the steps of removing an NGINX Instance from an Config Sync Group but keep it so that it remains being
-managed by NGINX One Console.
+1. To start your NGINX instance, click the **Run** button in this lab guide to deploy and have it automatically connect to the NGINX One Console:
 
-1. From your UDF Deployment, open a Web Shell to you **NGINX Plus** system.
+    <DockerContainer>
+        <Docker  
+            name="nginx-plus-1"
+            desc="NGINX Plus R32 with Agent."
+            image="private-registry.nginx.com/nginx-plus/agent:debian"
+            env={[
+                {name: "NGINX_AGENT_SERVER_GRPCPORT", value: "443"},
+                {name: "NGINX_AGENT_SERVER_HOST", value: "agent.connect.nginx.com"},
+                {name: "NGINX_AGENT_TLS_ENABLE", value: "true"},
+                {name: "NGINX_AGENT_TLS_SKIP_VERIFY", value: "false"},
+                {name: "NGINX_AGENT_SERVER_TOKEN", isVariable: true, isSecret: true},
+            ]}
+            attrs={[
+                { name: "volume", value: `${process.env["CONTAINER_MOUNT_BASE_DIR"]}/ssl:/etc/nginx/ssl` }
+            ]}
+        />
+    </DockerContainer>
 
-1. With your editor of choice, go to `/var/lib/nginx-agent/agent-dynamic.conf` and comment out the **instance_group**
-line. Then save you changes.
+    <SetVariable
+        name="nginx-plus-1"
+        isComponent="true"
+    />
+    <SetVariable
+        name="nginx-plus-2"
+        isComponent="true"
+    />
+    <SetVariable
+        name="nginx-plus-3"
+        isComponent="true"
+    />
+    <SetVariable
+        name="nginx-oss-1"
+        isComponent="true"
+    />
+    <SetVariable
+        name="nginx-oss-2"
+        isComponent="true"
+    />
+    <SetVariable
+        name="NGINX_AGENT_INSTANCE_GROUP_OSS"
+        value={`${process.env["PETNAME"]}-oss`}
+    />
 
-    ![](media/upskill/use-case-2/6.png)
+    > Note: If you receive an error, it may be that you have not input and saved the **NGINX_AGENT_SERVER_TOKEN** variable above.
 
-1. Restart **nginx-agent**
+1. Once the NGINX instance is up and running, press the **Test** button, to confirm the instance is online and responding to HTTP requests.
 
-    ```bash
-    systemctl restart nginx-agent
-    ```
+Now, lets get started on the lab!
 
-1. On your NGINX One Console, your **<GetVariable name="petname" />-ubuntu-plus** instance will no longer be there.
-You may have to click on the **Refresh** button.
-
-    ![](media/upskill/use-case-2/7.png)
-
-> If you want to move an instance to a different Config Sync Group, you would change the value for `instance_group` in
-`/var/lib/nginx-agent/agent-dynamic.conf` instead of commenting it out. NOTE: this only works when you have a VM or
-bare metal instance.
-
----
-### Review
-
-Great job! Through the use of Config Sync Groups, you have now accomplished a common Day-2 operation of scaling or
-upgrading your NGINX instances and NGINX One Console made this process extremely easy and fast!  You can also do this
-via the [NGINX One Console API](https://docs.nginx.com/nginx-one/api/api-reference-guide/) if you prefer to handle these
-steps through a pipeline.
-
-    > :point_right: It is possible to mix NGINX Plus and NGINX OSS instances in a Config Sync Group. However, the NGINX
-    configuration must be compatible for both the NGINX Plus and NGINX OSS instances. For example, you will not be able
-    to publish configurations that are exclusive to NGINX Plus, like
-    [JWT authentication](https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-jwt-authentication/)
-    to NGINX OSS. However, the ability to mix NGINX editions in a Config Sync Group can be very valuable in certain
-    situations, such as when migrating from NGINX OSS to NGINX Plus.
-
----
-## Lab Cleanup
-
-Time to clean up the resources you created in this lab. As a safety precaution, the NGINX One console will not allow
-you to delete an instance that is online. We will first have to shut down the instances before deleting them from the
-NGINX One console.
-
-1. On the **Lab Framework** machine, stop any running NGINX Plus Docker instances.
-
-    ```bash
-    docker rm -f {{petname}}-nginx-plus-sync
-    ```
-
-1. Go to your **NGINX Plus** instance and uninstall the NGINX Agent using the following command:
-
-    ```bash
-    sudo systemctl stop nginx-agent && sudo apt-get remove nginx-agent -y
-    ```
-
-1. From the NGINX One Console, in the left menu in the *Manage* section, select *Instances*.
-
-1. Wait until your **<GetVariable name="petname" />*** instances transition into the **Unavailable** state before
-proceeding. You may need to click the *Refresh* button at the top right of the instance list.
-
-    ![Instance Unavailable](media/upskill/use-case-2/cleanup-1.png)
-
-1. For each of your **<GetVariable name="petname" />*** instances, select the *Actions* "..." context menu, and select
-    *Delete*.
-
-    > :warning: **Warning:** Make sure you are deleting your own instances and not someone else’s.
-
-    ![Deleting an instance](media/cleanup-4.png)
-
-1. Confirm the deletion.
-
-    ![Confirming the deletion](media/cleanup-5.png)
-
-1. From the NGINX One console, in the left-hand menu in the *Manage* section, select *Config Sync Groups*.
-
-1. Delete your **<GetVariable name="petname" />** Config Sync Groups by selecting the *Actions* "..." context menu, then select *Delete* for each.
-
-    ![Delete Config Sync Group](media/upskill/use-case-2/cleanup-2.png)
-
-1. Confirm the deletion.
-
-    ![Confirming the deletion](media/cleanup-9.png)
-
-## Summary
-
-You should now be able to:
-
-1. Add a VM NGINX instance to a Config Sync Group
-1. Add a container NGINX instance to a Config Sync Group
-1. Publish NGINX configuration changes on the Config Sync Group
-1. Watch NGINX Agent logs as you update Config Sync Group's config
-1. Observe results when you try to change the NGINX config on the NGINX instance itself
-1. Removing NGINX instances from Config Sync Group
-
-## Up next
-
-Let's proceed to the [Fix It Lab](nginx-one-10.mdx).
+[Proceed to the lab](./nginx-one-2.mdx)
