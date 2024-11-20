@@ -76,7 +76,7 @@ With NGINX One Console, you will get improved:
 
 ### Prerequisites
 
-The "NGINX One Enablement Lab" UDF blueprint contains all the prerequisites for this lab. This includes:
+The "SDE NGINX One Console Upskilling" UDF blueprint contains all the prerequisites for this lab. This includes:
 
 - This interactive lab guide
 - NGINX Plus and NGINX OSS instances
@@ -99,10 +99,10 @@ NGINX One Console is a service provided within F5 Distributed Cloud.
 The NGINX Instances are located in the customers environment.
 
 > :warning: **Note:** In order for customers to use the NGINX One Console, the NGINX Instances must have internet
-connectivity. If their security policies prohibits this, there is product similar to the NGINX One Console called
+connectivity. If their security policies prohibits this, there is a product similar to the NGINX One Console called
 [NGINX Instance Manager](https://docs.nginx.com/nginx-management-suite/nim/) (NIM) that they can use within their environment.
 This will keep NGINX instance traffic within their environment but also note that the NGINX Instance Manager will upload
-customer metrics to F5.
+customer metrics to F5 by default. You are able to disable this starting on NIM 2.18, by setting **Disconnected Mode**.
 
 > NGINX Instance Manager is not in sustaining mode and has a dedicated development team with a roadmap. There was a
 product called NGINX Management Suite (NMS) which has NGINX Instance Manager built in. And NMS has moved to
@@ -124,6 +124,7 @@ firewall rules must allow the following type of traffic from the instances.
 | Port     | 443                     |
 | Protocol | gRPC                    |
 | Hostname | agent.connect.nginx.com |
+| IPs      | 3.135.72.139, 52.14.85.249, 3.133.232.50 |
 
 There are also a total of 2 gRPC connections for the following type of traffic.
 
@@ -153,6 +154,18 @@ In these sessions, we are breaking the labs into into the following sections bel
 - Interactive
 - Fix It
 
+### Demo
+We start each use case session with the **Demo Lab** where the instructor will be the one sharing
+and driving the configuration of a use case. The only ask here is to watch the instructor do the demo.
+
+### Interactive
+Next, participants join break out groups and be expected to complete the Interactive Lab.
+Participants may need to update configuration files in order to get a working solution.
+
+### Fix it
+The last portion will be the Fix It Lab where the participants are to deploy a broken solution and
+then using their validation and troubleshooting knowledge solve the mystery.
+
 ### Environment
 
 The diagram of the lab environment is shown in below.
@@ -169,18 +182,6 @@ The **Lab Framework** contains the following
 - this Lab Guide
 
 Portions of this session will involve bring up NGINX container instance that run on the **Lab Framework** system.
-
-### Demo
-We start each use case session with the **Demo Lab** where the instructor will be the one sharing
-and driving the configuration of a use case. The only ask here is to watch the instructor do the demo.
-
-### Interactive
-Next, participants join break out groups and be expected to complete the Interactive Lab.
-Participants may need to update configuration files in order to get a working solution.
-
-### Fix it
-The last portion will be the Fix It Lab where the participants are to deploy a broken solution and
-then using their validation and troubleshooting knowledge solve the mystery.
 
 ## Use Cases
 
